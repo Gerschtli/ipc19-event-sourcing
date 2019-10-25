@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
 
-use Eventsourcing\BillingAddress;
-use Eventsourcing\SessionId;
+use Eventsourcing\Application\Factory;
+use Eventsourcing\Model\BillingAddress;
+use Eventsourcing\Model\SessionId;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
@@ -26,7 +27,7 @@ return function (App $app) {
     $app->get('/start', function (Request $request, Response $response) {
         $sessionId = new SessionId('has4t1glskcktjh4ujs9eet26u');
 
-        $checkoutService = (new Eventsourcing\Factory())->createCheckoutService($sessionId);
+        $checkoutService = (new Factory())->createCheckoutService($sessionId);
 
         $checkoutService->start();
 
@@ -37,7 +38,7 @@ return function (App $app) {
     $app->get('/billingaddress', function (Request $request, Response $response) {
         $sessionId = new SessionId('has4t1glskcktjh4ujs9eet26u');
 
-        $checkoutService = (new Eventsourcing\Factory())->createCheckoutService($sessionId);
+        $checkoutService = (new Factory())->createCheckoutService($sessionId);
 
         $checkoutService->defineBillingAddress(new BillingAddress());
 
